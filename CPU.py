@@ -42,7 +42,8 @@ class CPU:
   #0x00 - NOP
   @opcode
   def nop (self):
-    return
+    self.m = 1
+    self.t = 4
 
   #0x01 - LD BC, d16
   @opcode
