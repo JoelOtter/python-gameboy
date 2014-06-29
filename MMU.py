@@ -72,3 +72,8 @@ class MMU:
   def ww (self, addr, val):
     #Write 16 bits
     print "ww"
+
+  def load (self, romFile):
+    f = open(romFile, 'rb')
+    self.rom = f.read()
+    print self.rom[0]

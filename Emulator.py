@@ -1,4 +1,6 @@
 import CPU
+import sys
 
+romFile = sys.argv[1]
 cpu = CPU.CPU()
-CPU.opcodes[0](cpu)
+cpu.mmu.load(romFile)
