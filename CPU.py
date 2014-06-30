@@ -40,12 +40,9 @@ class CPU:
   ###############
 
   #0x00 - NOP
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def nop (self):
+    self.m = 1
     print "NOP"
 
   #0x01 - LD BC d16
@@ -76,22 +73,24 @@ class CPU:
     print "INC BC"
 
   #0x04 - INC B
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def incb (self):
     print "INC B"
+    self.b = (self.b + 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.b == 0)
+    self.fHalfCarry = ((self.b & 0xF) == 0)
+    self.fSubtract = False
 
   #0x05 - DEC B
-  # Bytes: 1
-  # Flags ZHNC: Z 1 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def decb (self):
     print "DEC B"
+    self.b = (self.b - 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.b == 0)
+    self.fHalfCarry = ((self.b & 0xF) == 0xF)
+    self.fSubtract = True
 
   #0x06 - LD B d8
   # Bytes: 2
