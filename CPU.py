@@ -91,13 +91,12 @@ class CPU:
     self.fSubtract = True
 
   #0x06 - LD B d8
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def ldbd8 (self):
     print "LD B d8"
+    self.b = self.mmu.rb(self.pc)
+    self.m = 2
+    self.pc += 1
 
   #0x07 - RLCA
   # Bytes: 1
