@@ -29,7 +29,6 @@ class MMU:
     self.cpu = cpu
 
   def rb (self, addr):
-    print "Addr: " + str(addr)
     index = addr & 0xF000
 
     # BIOS (256b)/ROM0
@@ -37,7 +36,7 @@ class MMU:
       if (self.inBios):
         if (addr < 0x0100):
           return self.bios[addr]
-        elif (cpu.pc == 0x0100):
+        elif (self.cpu.pc == 0x0100):
           self.inBios = False
       return self.rom[addr]
 
