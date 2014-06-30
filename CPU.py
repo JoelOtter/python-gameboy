@@ -147,22 +147,24 @@ class CPU:
     print "DEC BC"
 
   #0x0c - INC C
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def incc (self):
     print "INC C"
+    self.c = (self.c + 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.c == 0)
+    self.fHalfCarry = ((self.c & 0xF) == 0)
+    self.fSubtract = False
 
   #0x0d - DEC C
-  # Bytes: 1
-  # Flags ZHNC: Z 1 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def decc (self):
     print "DEC C"
+    self.c = (self.c - 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.c == 0)
+    self.fHalfCarry = ((self.c & 0xF) == 0xF)
+    self.fSubtract = True
 
   #0x0e - LD C d8
   # Bytes: 2
