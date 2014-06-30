@@ -46,31 +46,29 @@ class CPU:
     print "NOP"
 
   #0x01 - LD BC d16
-  # Bytes: 3
-  # Flags ZHNC: - - - - 
-  # Cycles: 3
-  # TODO
   @opcode
   def ldbcd16 (self):
     print "LD BC d16"
+    self.c = self.mmu.rb(self.pc)
+    self.b = self.mmu.rb(self.pc + 1)
+    self.pc += 2
+    self.m = 3
 
   #0x02 - LD (BC) A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def ldbca (self):
     print "LD (BC) A"
+    self.mmu.wb((self.b << 8) | self.c, self.a)
+    self.m = 2
 
   #0x03 - INC BC
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def incbc (self):
     print "INC BC"
+    temp = ((self.b << 8) | self.c) + 1
+    self.b = (temp >> 8) & 0xFF
+    self.c = temp & 0xFF
+    self.m = 2
 
   #0x04 - INC B
   @opcode
