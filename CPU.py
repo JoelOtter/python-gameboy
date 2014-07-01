@@ -21,8 +21,7 @@ class CPU:
     self.c = 0
     self.d = 0
     self.e = 0
-    self.h = 0
-    self.l = 0
+    self.hl = 0
     self.pc, self.sp = [0]*2 # 16 bit
     self.m = 0               # Last clock
 
@@ -99,13 +98,15 @@ class CPU:
     self.pc += 1
 
   #0x07 - RLCA
-  # Bytes: 1
-  # Flags ZHNC: 0 0 0 C 
-  # Cycles: 1
-  # TODO
   @opcode
   def rlca (self):
     print "RLCA"
+    self.fCarry = (self.a > 0x7F)
+    self.a = ((self.a << 1) & 0xFF) | (self.a >> 7)
+    self.fZero = False
+    self.fHalfCarry = False
+    self.fSubtract = False
+    self.m = 1
 
   #0x08 - LD (a16) SP
   # Bytes: 3
@@ -117,13 +118,15 @@ class CPU:
     print "LD (a16) SP"
 
   #0x09 - ADD HL BC
-  # Bytes: 1
-  # Flags ZHNC: - 0 H C 
-  # Cycles: 2
-  # TODO
   @opcode
   def addhlbc (self):
     print "ADD HL BC"
+    temp = self.hl + ((self.b << 8) | self.c)
+    self.fHalfCarry = ((self.hl & 0xFFF) > (temp & 0xFFF))
+    self.fCarry = (temp > 0xFFFF)
+    self.fSubtract = False
+    self.hl = temp & 0xFFFF
+    self.m = 2
 
   #0x0a - LD A (BC)
   # Bytes: 1
