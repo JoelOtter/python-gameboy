@@ -193,13 +193,11 @@ class CPU:
     print "STOP 0"
 
   #0x11 - LD DE d16
-  # Bytes: 3
-  # Flags ZHNC: - - - - 
-  # Cycles: 3
-  # TODO
   @opcode
   def ldded16 (self):
     print "LD DE d16"
+    self.mmu.wb((self.d << 8) | self.e, self.a)
+    self.m = 3
 
   #0x12 - LD (DE) A
   # Bytes: 1
