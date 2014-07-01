@@ -129,22 +129,20 @@ class CPU:
     self.m = 2
 
   #0x0a - LD A (BC)
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def ldabc (self):
     print "LD A (BC)"
+    self.a = (self.b << 8) | self.c
+    self.m = 2
 
   #0x0b - DEC BC
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def decbc (self):
     print "DEC BC"
+    temp = (((self.b << 8) | self.c) - 1) & 0xFFFF
+    self.b = temp >> 8
+    self.c = temp & 0xFF
+    self.m = 2
 
   #0x0c - INC C
   @opcode
@@ -167,22 +165,23 @@ class CPU:
     self.fSubtract = True
 
   #0x0e - LD C d8
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def ldcd8 (self):
     print "LD C d8"
+    self.c = self.mmu.rb(self.pc)
+    self.pc += 1
+    self.m = 2
 
   #0x0f - RRCA
-  # Bytes: 1
-  # Flags ZHNC: 0 0 0 C 
-  # Cycles: 1
-  # TODO
   @opcode
   def rrca (self):
     print "RRCA"
+    self.a = (self.a >> 1) | ((self.a & 1) << 7)
+    self.fCarry = (self.a > 0x7F)
+    self.fHalfCarry = False
+    self.fZero = False
+    self.fSubtract = False
+    self.m = 1
 
   #0x10 - STOP 0
   # Bytes: 2
