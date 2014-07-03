@@ -615,58 +615,45 @@ class CPU:
     print "CCF"
 
   #0x40 - LD B B
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldbb (self):
     print "LD B B"
+    m = 1
 
   #0x41 - LD B C
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldbc (self):
     print "LD B C"
+    self.b = self.c
+    self.m = 1
 
   #0x42 - LD B D
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldbd (self):
     print "LD B D"
+    self.b = self.d
+    self.m = 1
 
   #0x43 - LD B E
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldbe (self):
     print "LD B E"
+    self.b = self.e
+    self.m = 1
 
   #0x44 - LD B H
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldbh (self):
     print "LD B H"
+    self.b = (self.hl >>  8)
+    self.m = 1
 
   #0x45 - LD B L
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldbl (self):
     print "LD B L"
+    self.b = (self.hl & 0xFF)
+    self.m = 1
 
   #0x46 - LD B (HL)
   # Bytes: 1
@@ -678,49 +665,38 @@ class CPU:
     print "LD B (HL)"
 
   #0x47 - LD B A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldba (self):
     print "LD B A"
+    self.b = self.a
+    self.m = 1
 
   #0x48 - LD C B
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldcb (self):
     print "LD C B"
+    self.c = self.b
+    self.m = 1
 
   #0x49 - LD C C
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldcc (self):
     print "LD C C"
+    self.m = 1
 
   #0x4a - LD C D
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldcd (self):
     print "LD C D"
+    self.c = self.d
+    self.m = 1
 
   #0x4b - LD C E
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldce (self):
     print "LD C E"
+    self.c = self.e
+    self.m = 1
 
   #0x4c - LD C H
   # Bytes: 1
@@ -750,49 +726,38 @@ class CPU:
     print "LD C (HL)"
 
   #0x4f - LD C A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldca (self):
     print "LD C A"
+    self.c = self.a
+    self.m = 1
 
   #0x50 - LD D B
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def lddb (self):
     print "LD D B"
+    self.d = self.b
+    self.m = 1
 
   #0x51 - LD D C
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def lddc (self):
     print "LD D C"
+    self.d = self.c
+    self.m = 1
 
   #0x52 - LD D D
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def lddd (self):
     print "LD D D"
+    self.m = 1
 
   #0x53 - LD D E
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldde (self):
     print "LD D E"
+    self.d = self.e
+    self.m = 1
 
   #0x54 - LD D H
   # Bytes: 1
@@ -822,49 +787,38 @@ class CPU:
     print "LD D (HL)"
 
   #0x57 - LD D A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldda (self):
     print "LD D A"
+    self.d = self.a
+    self.m = 1
 
   #0x58 - LD E B
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldeb (self):
     print "LD E B"
+    self.e = self.b
+    self.m = 1
 
   #0x59 - LD E C
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldec (self):
     print "LD E C"
+    self.e = self.c
+    self.m = 1
 
   #0x5a - LD E D
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def lded (self):
     print "LD E D"
+    self.e = self.d
+    self.m = 1
 
   #0x5b - LD E E
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldee (self):
     print "LD E E"
+    self.m = 1
 
   #0x5c - LD E H
   # Bytes: 1
