@@ -200,49 +200,49 @@ class CPU:
     self.m = 3
 
   #0x12 - LD (DE) A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def lddea (self):
     print "LD (DE) A"
+    self.mmu.wb((self.d << 8) | self.e, self.a)
+    self.m = 2
 
   #0x13 - INC DE
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def incde (self):
     print "INC DE"
+    temp = ((self.d << 8) | self.e) + 1
+    self.d = (temp >> 8) & 0xFF
+    self.e = temp & 0xFF
+    self.m = 2
+
 
   #0x14 - INC D
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def incd (self):
     print "INC D"
+    self.d = (self.d + 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.d == 0)
+    self.fHalfCarry = ((self.d & 0xF) == 0)
+    self.fSubtract = False
 
   #0x15 - DEC D
-  # Bytes: 1
-  # Flags ZHNC: Z 1 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def decd (self):
     print "DEC D"
+    self.d = (self.d - 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.d == 0)
+    self.fHalfCarry = ((self.d & 0xF) == 0xF)
+    self.fSubtract = True
 
   #0x16 - LD D d8
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def lddd8 (self):
     print "LD D d8"
+    self.d = self.mmu.rb(self.pc)
+    self.m = 2
+    self.pc += 1
 
   #0x17 - RLA
   # Bytes: 1
@@ -290,31 +290,32 @@ class CPU:
     print "DEC DE"
 
   #0x1c - INC E
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ince (self):
     print "INC E"
+    self.e = (self.e + 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.e == 0)
+    self.fHalfCarry = ((self.e & 0xF) == 0)
+    self.fSubtract = False
 
   #0x1d - DEC E
-  # Bytes: 1
-  # Flags ZHNC: Z 1 H - 
-  # Cycles: 1
-  # TODO
   @opcode
   def dece (self):
     print "DEC E"
+    self.e = (self.e - 1) & 0xFF
+    self.m = 1
+    self.fZero = (self.e == 0)
+    self.fHalfCarry = ((self.e & 0xF) == 0xF)
+    self.fSubtract = True
 
   #0x1e - LD E d8
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def lded8 (self):
     print "LD E d8"
+    self.e = self.mmu.rb(self.pc)
+    self.m = 2
+    self.pc += 1
 
   #0x1f - RRA
   # Bytes: 1
