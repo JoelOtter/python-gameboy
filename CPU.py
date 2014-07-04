@@ -245,31 +245,33 @@ class CPU:
     self.pc += 1
 
   #0x17 - RLA
-  # Bytes: 1
-  # Flags ZHNC: 0 0 0 C 
-  # Cycles: 1
-  # TODO
   @opcode
   def rla (self):
     print "RLA"
-
+    carry = 1 if self.fCarry else 0
+    self.fCarry = (self.a > 0x7F)
+    self.a = ((self.a << 1) & 0xFF) | carry
+    self.fZero = False
+    self.fHalfCarry = False
+    self.fSubtract = False
+    self.m = 1
+    
   #0x18 - JR r8
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 3
-  # TODO
   @opcode
   def jrr8 (self):
     print "JR r8"
+    self.pc = (self.pc + ((self.mmu.rb(self.pc) << 24) >> 24) + 1) & 0xFFFF
+    self.m = 3
 
   #0x19 - ADD HL DE
-  # Bytes: 1
-  # Flags ZHNC: - 0 H C 
-  # Cycles: 2
-  # TODO
   @opcode
   def addhlde (self):
     print "ADD HL DE"
+    temp = self.hl + ((self.d << 8) | self.e)
+    self.fHalfCarry = ((self.hl & 0xFFF) > (temp & 0xFFF))
+    self.fCarry = (temp > 0xFFFF)
+    self.hl = temp & 0xFFFF
+    self.fSubtract = False
 
   #0x1a - LD A (DE)
   # Bytes: 1
