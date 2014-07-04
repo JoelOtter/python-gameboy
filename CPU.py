@@ -848,13 +848,11 @@ class CPU:
     print "LD E (HL)"
 
   #0x5f - LD E A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldea (self):
     print "LD E A"
+    self.e = self.a
+    self.m = 1
 
   #0x60 - LD H B
   # Bytes: 1
@@ -893,13 +891,10 @@ class CPU:
     print "LD H E"
 
   #0x64 - LD H H
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldhh (self):
     print "LD H H"
+    self.m = 1
 
   #0x65 - LD H L
   # Bytes: 1
@@ -1073,40 +1068,32 @@ class CPU:
     print "LD (HL) A"
 
   #0x78 - LD A B
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldab (self):
     print "LD A B"
+    self.a = self.b
+    self.m = 1
 
   #0x79 - LD A C
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldac (self):
     print "LD A C"
+    self.a = self.c
+    self.m = 1
 
   #0x7a - LD A D
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldad (self):
     print "LD A D"
+    self.a = self.d
+    self.m = 1
 
   #0x7b - LD A E
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldae (self):
     print "LD A E"
+    self.a = self.e
+    self.m = 1
 
   #0x7c - LD A H
   # Bytes: 1
@@ -1136,49 +1123,58 @@ class CPU:
     print "LD A (HL)"
 
   #0x7f - LD A A
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def ldaa (self):
     print "LD A A"
+    self.m = 1
 
   #0x80 - ADD A B
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H C 
-  # Cycles: 1
-  # TODO
   @opcode
   def addab (self):
     print "ADD A B"
+    temp = self.a + self.b
+    self.fHalfCarry = ((temp & 0xF) < (self.a & 0xF))
+    self.fCarry = (temp > 0xFF)
+    self.a = temp & 0xFF
+    self.fZero = (self.a == 0)
+    self.fSubtract = False
+    self.m = 1
 
   #0x81 - ADD A C
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H C 
-  # Cycles: 1
-  # TODO
   @opcode
   def addac (self):
     print "ADD A C"
+    temp = self.a + self.c
+    self.fHalfCarry = ((temp & 0xF) < (self.a & 0xF))
+    self.fCarry = (temp > 0xFF)
+    self.a = temp & 0xFF
+    self.fZero = (self.a == 0)
+    self.fSubtract = False
+    self.m = 1
 
   #0x82 - ADD A D
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H C 
-  # Cycles: 1
-  # TODO
   @opcode
   def addad (self):
     print "ADD A D"
+    temp = self.a + self.d
+    self.fHalfCarry = ((temp & 0xF) < (self.a & 0xF))
+    self.fCarry = (temp > 0xFF)
+    self.a = temp & 0xFF
+    self.fZero = (self.a == 0)
+    self.fSubtract = False
+    self.m = 1
 
   #0x83 - ADD A E
-  # Bytes: 1
-  # Flags ZHNC: Z 0 H C 
-  # Cycles: 1
-  # TODO
   @opcode
   def addae (self):
     print "ADD A E"
+    temp = self.a + self.e
+    self.fHalfCarry = ((temp & 0xF) < (self.a & 0xF))
+    self.fCarry = (temp > 0xFF)
+    self.a = temp & 0xFF
+    self.fZero = (self.a == 0)
+    self.fSubtract = False
+    self.m = 1
 
   #0x84 - ADD A H
   # Bytes: 1
@@ -1215,6 +1211,11 @@ class CPU:
   @opcode
   def addaa (self):
     print "ADD A A"
+    self.fHalfCarry = ((self.a & 0x8) == 0x8);
+    self.fCarry = (self.a > 0x7F);
+    self.a = (self.a << 1) & 0xFF;
+    self.fZero = (self.a == 0);
+    self.fSubtract = False;
 
   #0x88 - ADC A B
   # Bytes: 1
