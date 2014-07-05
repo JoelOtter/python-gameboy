@@ -33,6 +33,9 @@ class CPU:
 
     #MMU
     self.mmu = MMU(self)
+
+    #Other state things
+    self.stopped = False
   
   ###############
   #OPERATIONS
@@ -184,13 +187,11 @@ class CPU:
     self.m = 1
 
   #0x10 - STOP 0
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 1
-  # TODO
   @opcode
   def stop0 (self):
     print "STOP 0"
+    self.stopped = True
+    self.m = 1
 
   #0x11 - LD DE d16
   @opcode
@@ -274,22 +275,20 @@ class CPU:
     self.fSubtract = False
 
   #0x1a - LD A (DE)
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def ldade (self):
     print "LD A (DE)"
+    self.a = self.mmu.rb((self.d << 8) | self.e)
+    self.m = 2
 
   #0x1b - DEC DE
-  # Bytes: 1
-  # Flags ZHNC: - - - - 
-  # Cycles: 2
-  # TODO
   @opcode
   def decde (self):
     print "DEC DE"
+    temp = (((self.d << 8) | self.e) - 1) & 0xFFFF
+    self.d = temp >> 8
+    self.e = temp & 0xFF
+    self.m = 2
 
   #0x1c - INC E
   @opcode
