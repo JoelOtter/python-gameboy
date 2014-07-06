@@ -319,22 +319,26 @@ class CPU:
     self.pc += 1
 
   #0x1f - RRA
-  # Bytes: 1
-  # Flags ZHNC: 0 0 0 C 
-  # Cycles: 1
-  # TODO
   @opcode
   def rra (self):
     print "RRA"
+    carry = 0x80 if self.fCarry else 0
+    self.fCarry = ((self.a & 1) == 1)
+    self.a = (self.a >> 1) | carry
+    self.fZero = False
+    self.fHalfCarry = False
+    self.fSubtract = False
 
   #0x20 - JR NZ r8
-  # Bytes: 2
-  # Flags ZHNC: - - - - 
-  # Cycles: 3/2/
-  # TODO
   @opcode
   def jrnzr8 (self):
     print "JR NZ r8"
+    if (!self.fZero):
+      self.pc = (self.pc + ((self.mmu.rb(self.pc) << 24) >> 24) + 1) & 0xFFFF
+      self.m = 3
+    else:
+      self.pc = (self.pc + 1) & 0xFFFF
+      self.m = 2
 
   #0x21 - LD HL d16
   # Bytes: 3
