@@ -335,7 +335,7 @@ class CPU:
     @opcode
     def jrnzr8(self):
         print "JR NZ r8"
-        if (!self.f_zero):
+        if not (self.f_zero):
             self.pc = (self.pc + ((self.mmu.rb(self.pc) << 24) >> 24) + 1) & 0xFFFF
             self.m = 3
         else:
