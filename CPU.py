@@ -361,13 +361,11 @@ class CPU:
         print "LD (HL+) A"
 
     #0x23 - INC HL
-    # Bytes: 1
-    # Flags ZHNC: - - - - 
-    # Cycles: 2
-    # TODO
     @opcode
     def inchl(self):
         print "INC HL"
+        self.hl = (self.hl + 1) & 0xFFFF
+        self.m = 2
 
     #0x24 - INC H
     # Bytes: 1
