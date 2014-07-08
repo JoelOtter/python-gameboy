@@ -343,13 +343,12 @@ class CPU:
             self.m = 2
 
     #0x21 - LD HL d16
-    # Bytes: 3
-    # Flags ZHNC: - - - - 
-    # Cycles: 3
-    # TODO
     @opcode
     def ldhld16(self):
         print "LD HL d16"
+        self.pc = (self.mmu.rb(self.pc + 1) & 0xFFFF) << 8) | self.mmu.rb(self.pc);
+        self.pc = (self.pc + 2) & 0xFFFF;
+        self.m = 3
 
     #0x22 - LD (HL+) A
     # Bytes: 1
