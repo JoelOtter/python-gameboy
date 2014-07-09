@@ -385,13 +385,11 @@ class CPU:
         print "DEC H"
 
     #0x26 - LD H d8
-    # Bytes: 2
-    # Flags ZHNC: - - - - 
-    # Cycles: 2
-    # TODO
     @opcode
     def ldhd8(self):
         print "LD H d8"
+        self.hl = (self.mmu.rb(self.pc) << 8) | (self.hl & 0xFF)
+        self.m = 2
 
     #0x27 - DAA
     # Bytes: 1
