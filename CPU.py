@@ -367,13 +367,15 @@ class CPU:
         self.m = 2
 
     #0x24 - INC H
-    # Bytes: 1
-    # Flags ZHNC: Z 0 H - 
-    # Cycles: 1
-    # TODO
     @opcode
     def inch(self):
         print "INC H"
+        h = ((self.hl >> 8) + 1) & 0xFF;
+        self.f_zero = (h == 0)
+        self.f_half_carry = ((h & 0xF) == 0)
+        self.f_subtract = False
+        self.hl = (h << 8) | (self.hl & 0xFF)
+        self.m = 1
 
     #0x25 - DEC H
     # Bytes: 1
